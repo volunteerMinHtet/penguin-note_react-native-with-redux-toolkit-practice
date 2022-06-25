@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import PrivateNotesList from '../features/private-notes/PrivateNoteList'
+import Login from '../features/auth/Login'
 
-const PrivateNoteScreen = () => {
+const LoginScreen = () => {
     return (
         <View style={styles.container}>
-            <Text>PrivateNoteScreen</Text>
-            <PrivateNotesList />
+            <Text>LoginScreen</Text>
+            <Login />
         </View>
     )
 }
 
-export default PrivateNoteScreen
+export default LoginScreen
 
 const styles = StyleSheet.create({
     container: {

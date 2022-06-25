@@ -6,6 +6,10 @@ export const getBaseServerApiUrl = () => {
     return SERVER_API_URL
 }
 
+export const getStatusBarHeight = () => {
+    return Constants.statusBarHeight
+}
+
 export const adjustUrlPath = (path) => {
     return path.startsWith('/') ? path.slice(1) : path
 }
