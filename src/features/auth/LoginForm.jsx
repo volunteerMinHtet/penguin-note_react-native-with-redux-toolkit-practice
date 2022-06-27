@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { useLoginMutation } from '../api/apiSlice'
+import { useLoginMutation } from '../../app/services/api'
 
-const Login = () => {
-    const [login, { data: loginData, isLoading, isSuccess, isError, error: loginError, status }] = useLoginMutation()
+const LoginForm = () => {
+    const [login, { isLoading, isSuccess, isError, error: loginError, status }] = useLoginMutation()
 
     const [loginFormData, setLoginFormData] = React.useState({
         user_name: null,
@@ -45,15 +45,15 @@ const Login = () => {
                 >
                     <Text style={styles.submitBtnText}>Login</Text>
                 </TouchableOpacity>
-
-                <Text>{`Status: ${status}`}</Text>
-                {isError && <Text>{loginError.data?.message}</Text>}
             </View>
+
+            <Text>{`Status: ${status}`}</Text>
+            {isError && <Text>{loginError.data?.message}</Text>}
         </View>
     )
 }
 
-export default Login
+export default LoginForm
 
 const styles = StyleSheet.create({
     container: {
@@ -61,9 +61,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'stretch',
+        borderWidth: 1,
     },
     formInputsGroup: {
-        flex: 0.5,
+        flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'center',
         alignSelf: 'stretch',

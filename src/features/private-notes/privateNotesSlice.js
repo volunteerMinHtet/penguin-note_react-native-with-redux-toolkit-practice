@@ -1,11 +1,6 @@
-// import { createEntityAdapter } from '@reduxjs/toolkit'
-import { apiSlice } from '../api/apiSlice'
+import { api } from '../../app/services/api'
 
-// const privateNotesAdapter = createEntityAdapter()
-
-// const initialState = privateNotesAdapter.getInitialState()
-
-const extendedApiSlice = apiSlice.injectEndpoints({
+const extendedApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getPrivateNotes: builder.query({
             query: () => ({
@@ -22,6 +17,4 @@ const extendedApiSlice = apiSlice.injectEndpoints({
     }),
 })
 
-export const { useGetPrivateNotesQuery, useGetPrivateNoteQuery } = extendedApiSlice
-
-// export const selectPrivateNotesResult = extendedApiSlice.endpoints.getPrivateNotes.select()
+export const { useGetPrivateNotesQuery, useGetPrivateNoteQuery } = extendedApi

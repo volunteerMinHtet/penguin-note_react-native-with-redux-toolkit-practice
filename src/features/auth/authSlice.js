@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { apiSlice } from '../api/apiSlice'
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { PURGE } from 'redux-persist'
+import { api } from '../../app/services/api'
 
 const initialState = {
     isAuthenticated: false,
@@ -12,11 +13,18 @@ const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addMatcher(apiSlice.endpoints.login.matchFulfilled, (state, { payload }) => {
-            state.isAuthenticated = true
-            state.user = payload.user
-            state.token = payload.token
+        builder.addCase(PURGE, (state) => {
+            state = initialState
         })
+
+        builder.addMatcher(
+            isAnyOf(api.endpoints.login.matchFulfilled, api.endpoints.register.matchFulfilled),
+            (state, { payload }) => {
+                state.isAuthenticated = true
+                state.user = payload.user
+                state.token = payload.token
+            }
+        )
     },
 })
 

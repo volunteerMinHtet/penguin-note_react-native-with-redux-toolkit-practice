@@ -1,10 +1,13 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Provider, useSelector } from 'react-redux'
-import store from './src/app/store'
+import { ActivityIndicator } from 'react-native'
+import { Provider as ReduxProvider, useSelector } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistor, store } from './src/app/store'
 import { selectIsAuthenticated } from './src/features/auth/authSlice'
 import HomeTabs from './src/screens/HomeTabs'
 import LoginScreen from './src/screens/LoginScreen'
+import RegisterScreen from './src/screens/RegisterScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -17,6 +20,7 @@ function MainLayout() {
                 {!isAuthenticated ? (
                     <>
                         <Stack.Screen name="Login" component={LoginScreen} />
+                        <Stack.Screen name="Register" component={RegisterScreen} />
                     </>
                 ) : (
                     <Stack.Screen name="HomeTabs" component={HomeTabs} />
@@ -28,14 +32,10 @@ function MainLayout() {
 
 export default function App() {
     return (
-        <Provider store={store}>
-            <MainLayout />
-
-            {/* <View style={styles.container}>
-                <PrivateNoteScreen />
-                <LoginScreen />
-                <StatusBar style="dark" />
-            </View> */}
-        </Provider>
+        <ReduxProvider store={store}>
+            <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+                <MainLayout />
+            </PersistGate>
+        </ReduxProvider>
     )
 }
